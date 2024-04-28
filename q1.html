@@ -489,7 +489,7 @@
 
         updateComponents();
 
-        document.addEventListener('mousedown', function (event) {
+        document.addEventListener('touchend', function (event) {
             // Check if the clicked element is an input with the 'input' class
             if (event.target.classList.contains('input-container')) {
                 const container = event.target;
