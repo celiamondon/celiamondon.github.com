@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le voyage de Celia</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @font-face {
+            font-family: 'ROMANUS';
+            src: url('ROMANUS.otf') format('opentype');
+            /* Ajoutez d'autres formats si nécessaire */
+        }
+        
+        body {
+            /* background-image: url('images/quetes.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; */
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            position: relative;
+            font-family: 'ROMANUS', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="images/quetes.jpg" alt="Intro" loading="lazy">
+    <h1>Le voyage de Celia</h1>
+    <h2>La quête de mille ans</h2>
+    <div class="quests">
+        <button id="btn1" onclick="quest1()">La pierre de Jaspe</button>
+        <button id="btn2" onclick="quest2()">La pierre de Lapis Lazuli</button>
+        <button id="btn3" onclick="quest3()">La pierre d'Obsidienne</button>
+        <button id="btn4" onclick="quest4()">La pierre d'Amethyste</button>
+        <button id="btn5" onclick="quest5()">La pierre d'Aventurine</button>
+        <button id="btn6" onclick="quest6()">La pierre de Quartz rose</button>
+        <button id="btn7" onclick="quest6()">L'anneau des dieux</button>
+    </div>
+
+    <div class="nav">
+        <div class="previous-page-button">
+            <div class="round-previous">
+                <div id="cta">
+                    <span class="arrow primera next "></span>
+                    <span class="arrow segunda next "></span>
+                </div>
+            </div>
+        </div>
+
+        <audio id="myaudio" src="music/quetes.mp3" autoplay>
+            Votre navigateur ne supporte pas l'élément <code>audio</code>.
+        </audio>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $('.round-previous').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.arrow').toggleClass('bounceAlpha');
+            goToPreviousPage();
+        });
+
+        $('.round-next').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.arrow').toggleClass('bounceAlpha');
+            goToNextPage();
+        });
+    </script>
+    <script>
+        function quest1() {
+            window.location.href = 'q1.html';
+        }
+
+        function quest2() {
+            window.location.href = 'q2.html';
+        }
+
+        function quest3() {
+            window.location.href = 'q3.html';
+        }
+
+        function quest4() {
+            window.location.href = 'q4.html';
+        }
+
+        function goToPreviousPage() {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('btn1').style.backgroundColor = '#ff0000';
+        document.getElementById('btn2').disabled = true;
+        document.getElementById('btn3').disabled = true;
+        document.getElementById('btn4').disabled = true;
+        document.getElementById('btn5').disabled = true;
+        document.getElementById('btn6').disabled = true;
+        document.getElementById('btn7').disabled = true;
+
+        var q1Finished = localStorage.getItem('q1Finished');
+        var q2Finished = localStorage.getItem('q2Finished');
+        var q3Finished = localStorage.getItem('q3Finished');
+        var q4Finished = localStorage.getItem('q4Finished');
+        var q5Finished = localStorage.getItem('q5Finished');
+        var q6Finished = localStorage.getItem('q6Finished');
+        var q7Finished = localStorage.getItem('q7Finished');
+
+
+        if (q1Finished) {
+            document.getElementById('btn2').style.backgroundColor = '#0F056B';
+            document.getElementById('btn2').disabled = false;
+        }
+
+        if (q2Finished) {
+            document.getElementById('btn3').style.backgroundColor = '#000000';
+            document.getElementById('btn3').disabled = false;
+        }
+
+        if (q3Finished) {
+            document.getElementById('btn4').style.backgroundColor = '#7f00ff';
+            document.getElementById('btn4').disabled = false;
+        }
+
+        if (q4Finished) {
+            document.getElementById('btn5').style.backgroundColor = '#01d758';
+            document.getElementById('btn5').disabled = false;
+        }
+
+        if (q5Finished) {
+            document.getElementById('btn6').style.backgroundColor = '#FD6C9E';
+            document.getElementById('btn6').disabled = false;
+        }
+
+        if (q6Finished) {
+            document.getElementById('btn7').style.backgroundColor = '#D4AF37';
+            document.getElementById('btn7').disabled = false;
+        }
+
+    </script>
+</body>
+
+</html>

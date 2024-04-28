@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le voyage de Celia</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            /* background-image: url('images/q3-1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; */
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="images/q3-1.jpg" alt="Intro" loading="lazy">
+    <div class="container" id="inp">
+        <div id="inputs" class="inputs">
+            <div class="ligne1">
+                <input class="input" type="text" inputmode="text" maxlength="1" />
+                <input class="input" type="text" inputmode="text" maxlength="1" />
+                <input class="input" type="text" inputmode="text" maxlength="1" />
+                <input class="input" type="text" inputmode="text" maxlength="1" />
+                <input class="input" type="text" inputmode="text" maxlength="1" />
+                <input class="input" type="text" inputmode="text" maxlength="1" />
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay">
+        <p id="text">
+            Encore une pierre de trouvée, continuous sur cette lancée ! Sur les traces de quel héros allons nous à
+            présent nous lancer ?
+        </p>
+    </div>
+    <div>
+        <div class="previous-page-button">
+            <div class="round-previous">
+                <div id="cta">
+                    <span class="arrow primera next "></span>
+                    <span class="arrow segunda next "></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="next" class="next-page-button">
+            <div class="round-next">
+                <div id="cta">
+                    <span class="arrow primera next "></span>
+                    <span class="arrow segunda next "></span>
+                </div>
+            </div>
+        </div>
+
+        <audio id="myaudio" src="music/q3.mp3" autoplay>
+            Votre navigateur ne supporte pas l'élément <code>audio</code>.
+        </audio>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $('.round-previous').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.arrow').toggleClass('bounceAlpha');
+            goToPreviousPage();
+        });
+
+        $('.round-next').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.arrow').toggleClass('bounceAlpha');
+            goToNextPage();
+        });
+    </script>
+    <script>
+        function checkAnswer(page_number) {
+            if (page_number == 3) {
+                var inputs = document.querySelectorAll('#inp .input');
+                var inputValues = [];
+                inputs.forEach(function (input) {
+                    inputValues.push(input.value);
+                });
+                var combinedString = inputValues.join('');
+                if (combinedString == "ATHENA") {
+                    document.getElementById("next").hidden = false;
+                }
+            }
+        }
+
+        document.getElementById("inp").hidden = true;
+        const inputs = document.getElementById("inputs");
+        inputs.addEventListener("input", function (e) {
+            const target = e.target;
+            const val = target.value;
+            target.value = val.toUpperCase();
+            console.log(target.value);
+            if (val != "") {
+                const next = target.nextElementSibling;
+                if (next) {
+                    next.focus();
+                }
+            }
+            checkAnswer(page_number);
+        });
+
+        inputs.addEventListener("keyup", function (e) {
+            const target = e.target;
+            const key = e.key.toLowerCase();
+            console.log(key);
+            if (key == "backspace" || key == "delete") {
+                target.value = "";
+                const prev = target.previousElementSibling;
+                if (prev) {
+                    prev.focus();
+                }
+                return;
+            }
+            else if (key == "enter") {
+                const next = target.nextElementSibling;
+                if (next) {
+                    next.focus();
+                }
+            }
+        });
+
+        var audio = document.getElementById("myaudio");
+        audio.volume = 0.1;
+
+        const text_array = [
+            "Encore une pierre de trouvée, continuous sur cette lancée ! Sur les traces de quel héros allons nous à présent nous lancer ?",
+
+            "Dans sa quête audacieuse pour affronter la redoutable Méduse, Persée reçut un don inestimable de la part d'Hadès, un casque lui conférant l'invisibilité. Tout en l'arborant, Persée s'aventure là où réside la redoutable Gorgone après avoir arraché l'information aux trois Parques. Grâce à la protection offerte par le casque, il parvient à s'approcher de Méduse sans être vu et finit par la vaincre.",
+
+            "La guilde a decouvert que les propriétés d'invisibilité étaient attribuables à la pierre d'obsidienne, incrustée sur le casque par son gardien, le dieu des Enfers. En effet cette gemme est réputée pour sa protection contre les forces obscures. Malheureusement nous n'avons pas plus d'informations...",
+
+            "Mais, que se passe-t-il ? La pierre de Jaspe, elle emet une lueur, et j'entends une voix ! <em>Pétrifiée par Méduse, figée dans la pierre, Je surplombe la roue des douze, une gardiene austère. Toi qui convoite le pouvoir de te dissimuler, avec mon héritage vient me retrouver.</em> Mais qui était-ce?",
+
+            "\"Célia, je t'ai appelée à mon secours car tu es la seule en mesure de me libérer. Après avoir triomphé de Méduse, Persée m'a pétrifiée en utilisant sa tête tranchée avant de s'enfuir. Il cherche à s'emparer des artefacts divins des dieux, dont la pierre d'obsidienne. Seule cette pierre peut briser ce sortilège et me libérer. J'ai imploré Apollon d'utiliser son char pour rendre visite aux trois <em>Parques</em>. Cependant, après avoir partagé une cruche de vin avec Dionysos à la taverne du <em>Lion Noir</em>, il est possible qu'il ait, en raison de l'ivresse, mal interprété ma demande. Il est parti rapidement en affirmant qu'il n'aurait qu'à <em>retourner à la taverne puis à remonter l'allée.</em>\"",
+
+            "Alors que je visitais les parcs à la recherche de la trace de Persée, il m'est apparu soudainement, comme sorti de nulle part. En un éclair, il m'a pétrifié en utilisant la tête tranchée de Méduse. Et ce qui est encore plus troublant, il a osé me voler mon char, l'un des plus précieux artefacts divins. Il s'est ensuite envolé et disparu parmis les étoiles ! Si seulement quelqu'un avait le <em>pouvoir de le ramener à la raison</em>...",
+
+            "Il te faudra trouver un bon <em>observatoire</em>, et t'équiper de bonnes <em>lunettes</em>, pour retrouver Persée et lui prendre la pierre."
+        ];
+
+        var page_number = 0;
+
+        // Ajoute une petite pause avant d'ajouter la classe
+        setTimeout(function () {
+            var overlay = document.querySelector('.overlay');
+            overlay.style.opacity = 1;
+        }, 100); // 100 millisecondes de délai
+
+        // Fonction pour aller à la page suivante (à personnaliser)
+        function goToNextPage() {
+            if (page_number == text_array.length - 1) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            document.getElementById('text').innerHTML = text_array[page_number + 1];
+            page_number = page_number + 1;
+
+            if (page_number == 3) {
+                document.getElementById("inp").hidden = false;
+                document.getElementById("next").hidden = true;
+                return;
+            }
+
+            if (page_number == 4) {
+                document.getElementById("inp").hidden = true;
+                document.getElementById("next").hidden = false;
+                return;
+            }
+
+            if (page_number == 6) {
+                localStorage.setItem("q3Finished", "True");
+            }
+
+            fullScreen();
+            document.querySelector('img').src = `images/q3-${page_number + 1}.jpg`;
+        }
+
+        function goToPreviousPage() {
+            if (page_number == 0) {
+                window.location.href = 'quetes.html';
+            }
+
+            document.getElementById('text').innerHTML = text_array[page_number - 1];
+            document.querySelector('img').src = `images/q3-${page_number}.jpg`;
+            page_number = page_number - 1;
+
+            if (page_number == 2) {
+                document.getElementById("inp").hidden = true;
+                document.getElementById("next").hidden = false;
+                return;
+            }
+
+            if (page_number == 3) {
+                document.getElementById("inp").hidden = false;
+                document.getElementById("next").hidden = true;
+                return;
+            }
+
+            fullScreen();
+        }
+
+        function fullScreen() {
+            if (document.fullscreenEnabled) {
+                // Request full-screen mode for the document element
+                document.documentElement.requestFullscreen()
+                    .then(() => {
+                        console.log('Entered fullscreen mode');
+                    })
+                    .catch((error) => {
+                        console.error('Error entering fullscreen mode:', error);
+                    });
+            } else {
+                console.error('Fullscreen mode is not supported in this browser');
+            }
+        }
+    </script>
+</body>
+
+</html>

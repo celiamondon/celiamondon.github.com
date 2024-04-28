@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le voyage de Celia</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @font-face {
+            font-family: 'ROMANUS';
+            src: url('ROMANUS.otf') format('opentype');
+            /* Ajoutez d'autres formats si nécessaire */
+        }
+
+        body {
+            background-image: url('images/alice.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-family: 'ROMANUS', sans-serif;
+        }
+
+        div {
+            position: absolute;
+            top: 90%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Le voyage de Celia</h1>
+    <h2>La quête de mille ans</h2>
+
+    <div>
+        <button id="btnIntroduction" onclick="showIntroduction()">Introduction</button>
+        <button id="btnCommencer" onclick="startJourney()">Commencer</button>
+    </div>
+    <audio id="myaudio" src="music/quetes.mp3" autoplay>
+        Votre navigateur ne supporte pas l'élément <code>audio</code>.
+    </audio>
+
+    <script>
+        function showIntroduction() {
+            // Rediriger vers la page d'introduction
+            window.location.href = 'intro.html';
+        }
+
+        function startJourney() {
+            window.location.href = 'quetes.html';
+        }
+    </script>
+</body>
+
+</html>

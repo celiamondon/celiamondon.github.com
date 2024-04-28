@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction</title>
+    <style>
+        /* Réinitialisation des marges */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        /* Ajoutez vos styles CSS ici */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .slider-images {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .slider-image {
+            flex: 0 0 auto;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0px;
+            overflow: hidden;
+        }
+
+        .slider-text {
+            margin-bottom: 70px;
+            margin-left: 10px;
+            margin-right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            text-align: justify;
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 100%;
+            /* Ajout d'une largeur */
+            height: 50px;
+            /* Ajout d'une hauteur */
+        }
+
+        .input-container {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            height: auto;
+            display: flex;
+        }
+
+        .input-container:nth-child(2) {
+            top: 50px;
+            /* Ajustez la valeur pour l'espace entre les deux conteneurs */
+        }
+
+        .previous-page-button {
+            position: absolute;
+            top: 0px;
+            left: 40px;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transform: scaleX(-1);
+        }
+
+        .next-page-button {
+            position: absolute;
+            top: 0px;
+            right: 40px;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .round-previous {
+            position: absolute;
+            border: 2px solid #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+
+        }
+
+        .round-next {
+            position: absolute;
+            border: 2px solid #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+
+        }
+
+        #cta {
+            width: 100%;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        #cta .arrow {
+            left: 30%;
+        }
+
+        .arrow {
+            position: absolute;
+            bottom: 0;
+            margin-left: 0px;
+            width: 12px;
+            height: 12px;
+            background-size: contain;
+            top: 15px;
+        }
+
+        .segunda {
+            margin-left: 8px;
+        }
+
+        .next {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHN0eWxlPi5zdDB7ZmlsbDojZmZmfTwvc3R5bGU+PHBhdGggY2xhc3M9InN0MCIgZD0iTTMxOS4xIDIxN2MyMC4yIDIwLjIgMTkuOSA1My4yLS42IDczLjdzLTUzLjUgMjAuOC03My43LjZsLTE5MC0xOTBjLTIwLjEtMjAuMi0xOS44LTUzLjIuNy03My43UzEwOSA2LjggMTI5LjEgMjdsMTkwIDE5MHoiLz48cGF0aCBjbGFzcz0ic3QwIiBkPSJNMzE5LjEgMjkwLjVjMjAuMi0yMC4yIDE5LjktNTMuMi0uNi03My43cy01My41LTIwLjgtNzMuNy0uNmwtMTkwIDE5MGMtMjAuMiAyMC4yLTE5LjkgNTMuMi42IDczLjdzNTMuNSAyMC44IDczLjcuNmwxOTAtMTkweiIvPjwvc3ZnPg==);
+        }
+
+        @keyframes bounceAlpha {
+            0% {
+                opacity: 1;
+                transform: translateX(0px) scale(1);
+            }
+
+            25% {
+                opacity: 0;
+                transform: translateX(10px) scale(0.9);
+            }
+
+            26% {
+                opacity: 0;
+                transform: translateX(-10px) scale(0.9);
+            }
+
+            55% {
+                opacity: 1;
+                transform: translateX(0px) scale(1);
+            }
+        }
+
+        .bounceAlpha {
+            animation-name: bounceAlpha;
+            animation-duration: 1.4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .arrow.primera.bounceAlpha {
+            animation-name: bounceAlpha;
+            animation-duration: 1.4s;
+            animation-delay: 0.2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .round:hover .arrow {
+            animation-name: bounceAlpha;
+            animation-duration: 1.4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .round:hover .arrow.primera {
+            animation-name: bounceAlpha;
+            animation-duration: 1.4s;
+            animation-delay: 0.2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .input {
+            width: 10px;
+            border: none;
+            border-bottom: 3px solid rgba(0, 0, 0, 0.5);
+            margin: 0 10px;
+            text-align: center;
+            font-size: 10px;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slider-container">
+        <div class="slider-images">
+            <!-- Images et textes seront ajoutés ici dynamiquement -->
+        </div>
+        <div id="inp2" class="input-container"></div>
+        <div id="inp1" class="input-container"></div>
+        <div class="slider-controls">
+            <div class="previous-page-button">
+                <div class="round-previous">
+                    <div id="cta">
+                        <span class="arrow primera next "></span>
+                        <span class="arrow segunda next "></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="next" class="next-page-button">
+                <div class="round-next">
+                    <div id="cta">
+                        <span class="arrow primera next "></span>
+                        <span class="arrow segunda next "></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="myaudio" src="music/q1.mp3" autoplay>
+        Votre navigateur ne supporte pas l'élément <code>audio</code>.
+    </audio>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $('.round-previous').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.arrow').toggleClass('bounceAlpha');
+            prevSlide();
+        });
+
+        $('.round-next').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.arrow').toggleClass('bounceAlpha');
+            nextSlide();
+        });
+    </script>
+    <script>
+        // Tableaux pour stocker les liens des images et les textes correspondants
+        const images = ['images/q1-1.jpg', 'images/q1-2.jpg', 'images/q1-3.jpg', 'images/q1-4.jpg', 'images/q1-5.jpg']; // Ajoutez les liens des images ici
+        const texts = [
+            "Bonjour Célia, la guilde a retrouvé la trace d'une pierre et tu étais la plus proche, alors ils m'ont envoyé te prévenir! De nombreuses aventures et enigmes nous attendent, mais je serai à tes côtés tout au long de cette quête. Bien, voici ce que nous avons découvert...",
+
+            "Il y a très longtemps, les guildes s'affrontaient dans des tournois sanglants. À cette époque, nous étions extrêmement puissants, mais nos rivaux l'était encore plus. Il s'agissait d'une guilde de gladiateurs, fondée au préalable par nul autre qu'Héraklès alias Hercule! Nous pensons qu'il avait en sa possession la pierre de Jaspe, lui permettant de réaliser tant d'exploits. Elle se serait ensuite transmise de génération en génération au sein de cette guilde.",
+
+            "Malheureusement nous avons perdu leur trace car ils sont désormais une société secrète, sous couverture d'un autre nom. Mais selon d'anciens écrits, on peut trouver leur emblème à Toulouse <em>en se rendant au coeur de la ville, et en suivant la direction du cancer, puis en empruntant le passage du taureau. Sur la place, il faut passer sous la porte du tympan et déambuler vers le Nord-Est jusqu'au Saint-Esprit</em>. Si nous voulons en apprendre plus, il faudra retrouver cet emblème qui nous mènera à leur arène. Alors, quel est le nom de cette guilde?",
+
+            "Bien joué! Allons voir un match, la guilde nous a envoyé nos billets. Avec les dernières informations que tu as découvert, ils ont également retrouvé la trace du dernier posseseur de la pierre! Il s'agirait d'un joueur du stade Toulousain, un certain Alfred, mort pour la france pendant la première guerre mondiale. Une fois sur place, il nous faudra trouver son nom.",
+
+            "Bravo, tu as trouvé le dernier détenteur connu de la pierre de Jaspe. Mort sur le champ de bataille, il griffona ses dernièrs mots pour ses camarades, qui ne saisirent jamais leur sens: <em>'Pour trouver la force dans sa main, il faut être à la Place d'Heraklès.'</em>"];
+
+        const sliderImagesContainer = document.querySelector('.slider-images');
+
+        // Ajoute les images et les textes au slider
+        images.forEach((image, index) => {
+            const slide = document.createElement('div');
+            slide.classList.add('slider-image');
+            slide.style.backgroundImage = `url('${image}')`;
+
+            const text = document.createElement('div');
+            text.classList.add('slider-text');
+            text.innerHTML = texts[index];
+
+            slide.appendChild(text);
+            sliderImagesContainer.appendChild(slide);
+        });
+
+        // JavaScript pour faire défiler les images
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.slider-image');
+    </script>
+    <script>
+        function addInputs1(numInputs) {
+            const inputContainer = document.getElementById('inp1');
+            for (let i = 0; i < numInputs; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.maxLength = 1;
+                input.id = `input1_${i + 1}`; // Assurez-vous que l'ID est unique pour chaque input
+                input.className = 'input';
+                input.oninput = function () {
+                    if (input.value != '') {
+                        input.value = input.value.toUpperCase();
+                        focusNext(this);
+                    }
+                };
+                input.onkeydown = function (event) {
+                    // Si la touche pressée est "effacer" (code 8) et que l'input est vide
+                    if (event.keyCode === 8 && input.value === '') {
+                        // Empêche le comportement par défaut de la touche "effacer" (ne pas naviguer vers l'arrière)
+                        event.preventDefault();
+                        // Focus sur l'élément précédent
+                        focusPrevious(this);
+                    }
+                };
+                inputContainer.appendChild(input);
+            }
+        }
+
+        function addInputs2(numInputs) {
+            const inputContainer = document.getElementById('inp2');
+            for (let i = 0; i < numInputs; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.maxLength = 1;
+                input.id = `input2_${i + 1}`; // Assurez-vous que l'ID est unique pour chaque input
+                input.className = 'input';
+                input.oninput = function () {
+                    if (input.value != "") {
+                        input.value = input.value.toUpperCase();
+                        focusNext(this);
+                    }
+                };
+                input.onkeydown = function (event) {
+                    // Si la touche pressée est "effacer" (code 8) et que l'input est vide
+                    if (event.keyCode === 8 && input.value === '') {
+                        // Empêche le comportement par défaut de la touche "effacer" (ne pas naviguer vers l'arrière)
+                        event.preventDefault();
+                        // Focus sur l'élément précédent
+                        focusPrevious(this);
+                    }
+                };
+                inputContainer.appendChild(input);
+            }
+        }
+
+        function deleteInputs() {
+            const inputContainer1 = document.getElementById('inp1');
+            while (inputContainer1.firstChild) {
+                inputContainer1.removeChild(inputContainer1.firstChild);
+            }
+            const inputContainer2 = document.getElementById('inp2');
+            while (inputContainer2.firstChild) {
+                inputContainer2.removeChild(inputContainer2.firstChild);
+            }
+        }
+
+        function focusNext(input) {
+            const nextInput = input.nextElementSibling; // Obtenez l'élément suivant
+
+            // Si un élément suivant existe
+            if (nextInput) {
+                nextInput.focus(); // Déplacez le focus vers l'élément suivant
+            } else {
+                const inputContainer = input.parentElement; // Obtenez le conteneur de l'input
+
+                // Si un conteneur suivant existe
+                if (inputContainer.id === 'inp1') {
+                    if (document.getElementById('inp2').querySelector('input')) {
+                        document.getElementById('inp2').querySelector('input').focus();
+                    }
+                }
+            }
+
+            checkAnswer(currentIndex);
+        }
+
+        function focusPrevious(input) {
+            const previousInput = input.previousElementSibling;
+            if (previousInput) {
+                previousInput.focus();
+            }
+            else {
+                const inputContainer = document.getElementById('inp1');
+                const inputs = inputContainer.querySelectorAll('input');
+                const lastInput = inputs[inputs.length - 1]; // Récupérer le dernier input
+                if (lastInput) {
+                    lastInput.focus(); // Focaliser le dernier input
+                }
+            }
+        }
+
+        function checkAnswer(page_number) {
+            if (page_number == 2) {
+                var inputs1 = document.querySelectorAll('#inp1 .input'); // Sélectionner les inputs dans #inp1
+                var inputs2 = document.querySelectorAll('#inp2 .input'); // Sélectionner les inputs dans #inp2
+
+                var inputValues1 = [];
+                inputs1.forEach(function (input) {
+                    inputValues1.push(input.value);
+                });
+
+                var inputValues2 = [];
+                inputs2.forEach(function (input) {
+                    inputValues2.push(input.value);
+                });
+
+                var combinedString1 = inputValues1.join('');
+                var combinedString2 = inputValues2.join('');
+
+                if (combinedString1 == "STADE" && combinedString2 == "TOULOUSAIN") {
+                    document.getElementById("next").hidden = false;
+                }
+            }
+            else if (page_number == 3) {
+                var inputs = document.querySelectorAll('#inp1 .input'); // Sélectionner les inputs dans #inp1
+                var inputValues = [];
+                inputs.forEach(function (input) {
+                    1
+                    inputValues.push(input.value);
+                });
+                var combinedString = inputValues.join('');
+                if (combinedString == "MAYSSONNIE") {
+                    document.getElementById("next").hidden = false;
+                }
+            }
+        }
+
+        function showNextSlide(index) {
+            if (index >= slides.length) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const offset = -(currentIndex + 1) * 100;
+            document.querySelector('.slider-images').style.transform = `translateX(${offset}%)`;
+        }
+
+        function showPreviousSlide(index) {
+            if (index < 0) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const offset = -(currentIndex - 1) * 100;
+            document.querySelector('.slider-images').style.transform = `translateX(${offset}%)`;
+        }
+
+        function prevSlide() {
+            showPreviousSlide(currentIndex - 1);
+            currentIndex--; // Increment currentIndex after showing the next slide
+            updateComponents();
+        }
+
+        function nextSlide() {
+            showNextSlide(currentIndex + 1);
+            currentIndex++; // Increment currentIndex after showing the next slide
+            updateComponents();
+        }
+
+        function updateComponents() {
+            switch (currentIndex) {
+                case 2:
+                    deleteInputs();
+                    addInputs1(5);
+                    addInputs2(10);
+                    document.getElementById("next").hidden = true;
+                    break;
+                case 3:
+                    deleteInputs();
+                    addInputs1(10);
+                    document.getElementById("next").hidden = true;
+                    break;
+                case 5:
+                    localStorage.setItem("q1Finished", "True");
+                default:
+                    deleteInputs();
+                    document.getElementById("next").hidden = false;
+            }
+        }
+
+
+        updateComponents();
+
+        document.addEventListener('mousedown', function (event) {
+            // Check if the clicked element is an input with the 'input' class
+            if (event.target.classList.contains('input-container')) {
+                const container = event.target;
+                setTimeout(function () {
+                    container.querySelector("input").focus();
+                }, 100);
+            }
+        });
+    </script>
+</body>
+
+</html>

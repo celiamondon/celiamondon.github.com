@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction</title>
+    <style>
+        /* Réinitialisation des marges */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        /* Ajoutez vos styles CSS ici */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .slider-images {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .slider-image {
+            flex: 0 0 auto;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0px;
+            overflow: hidden;
+        }
+
+        .slider-text {
+            margin-bottom: 70px;
+            margin-left: 10px;
+            margin-right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            text-align: justify;
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 100%;
+            /* Ajout d'une largeur */
+            height: 50px;
+            /* Ajout d'une hauteur */
+        }
+
+        .input-container {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            height: auto;
+            display: flex;
+        }
+
+        .input-container:nth-child(2) {
+            top: 50px;
+            /* Ajustez la valeur pour l'espace entre les deux conteneurs */
+        }
+
+        .previous-page-button {
+            position: absolute;
+            top: 0px;
+            left: 40px;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transform: scaleX(-1);
+        }
+
+        .next-page-button {
+            position: absolute;
+            top: 0px;
+            right: 40px;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .round-previous {
+            position: absolute;
+            border: 2px solid #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+
+        }
+
+        .round-next {
+            position: absolute;
+            border: 2px solid #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+
+        }
+
+        #cta {
+            width: 100%;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        #cta .arrow {
+            left: 30%;
+        }
+
+        .arrow {
+            position: absolute;
+            bottom: 0;
+            margin-left: 0px;
+            width: 12px;
+            height: 12px;
+            background-size: contain;
+            top: 15px;
+        }
+
+        .segunda {
+            margin-left: 8px;
+        }
+
+        .next {
+            background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHN0eWxlPi5zdDB7ZmlsbDojZmZmfTwvc3R5bGU+PHBhdGggY2xhc3M9InN0MCIgZD0iTTMxOS4xIDIxN2MyMC4yIDIwLjIgMTkuOSA1My4yLS42IDczLjdzLTUzLjUgMjAuOC03My43LjZsLTE5MC0xOTBjLTIwLjEtMjAuMi0xOS44LTUzLjIuNy03My43UzEwOSA2LjggMTI5LjEgMjdsMTkwIDE5MHoiLz48cGF0aCBjbGFzcz0ic3QwIiBkPSJNMzE5LjEgMjkwLjVjMjAuMi0yMC4yIDE5LjktNTMuMi0uNi03My43cy01My41LTIwLjgtNzMuNy0uNmwtMTkwIDE5MGMtMjAuMiAyMC4yLTE5LjkgNTMuMi42IDczLjdzNTMuNSAyMC44IDczLjcuNmwxOTAtMTkweiIvPjwvc3ZnPg==);
+        }
+
+        @keyframes bounceAlpha {
+            0% {
+                opacity: 1;
+                transform: translateX(0px) scale(1);
+            }
+
+            25% {
+                opacity: 0;
+                transform: translateX(10px) scale(0.9);
+            }
+
+            26% {
+                opacity: 0;
+                transform: translateX(-10px) scale(0.9);
+            }
+
+            55% {
+                opacity: 1;
+                transform: translateX(0px) scale(1);
+            }
+        }
+
+        .bounceAlpha {
+            animation-name: bounceAlpha;
+            animation-duration: 1.4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .arrow.primera.bounceAlpha {
+            animation-name: bounceAlpha;
+            animation-duration: 1.4s;
+            animation-delay: 0.2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .round:hover .arrow {
+            animation-name: bounceAlpha;
+            animation-duration: 1.4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .round:hover .arrow.primera {
+            animation-name: bounceAlpha;
+            animation-duration: 1.4s;
+            animation-delay: 0.2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .input {
+            width: 10px;
+            border: none;
+            border-bottom: 3px solid rgba(0, 0, 0, 0.5);
+            margin: 0 10px;
+            text-align: center;
+            font-size: 10px;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slider-container">
+        <div class="slider-images">
+            <!-- Images et textes seront ajoutés ici dynamiquement -->
+        </div>
+        <div id="inp2" class="input-container"></div>
+        <div id="inp1" class="input-container"></div>
+        <div class="slider-controls">
+            <div class="previous-page-button">
+                <div class="round-previous">
+                    <div id="cta">
+                        <span class="arrow primera next "></span>
+                        <span class="arrow segunda next "></span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="next" class="next-page-button">
+                <div class="round-next">
+                    <div id="cta">
+                        <span class="arrow primera next "></span>
+                        <span class="arrow segunda next "></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="myaudio" src="music/q2.mp3" autoplay>
+        Votre navigateur ne supporte pas l'élément <code>audio</code>.
+    </audio>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $('.round-previous').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.arrow').toggleClass('bounceAlpha');
+            prevSlide();
+        });
+
+        $('.round-next').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.arrow').toggleClass('bounceAlpha');
+            nextSlide();
+        });
+    </script>
+    <script>
+        // Tableaux pour stocker les liens des images et les textes correspondants
+        const images = ['images/q3-1.jpg', 'images/q3-2.jpg', 'images/q3-3.jpg', 'images/q3-4.jpg', 'images/q3-5.jpg', 'images/q3-6.jpg', 'images/q3-7.jpg']; // Ajoutez les liens des images ici
+        const texts = [
+            "Encore une pierre de trouvée, continuous sur cette lancée ! Sur les traces de quel héros allons nous à présent nous lancer ?",
+
+            "Dans sa quête audacieuse pour affronter la redoutable Méduse, Persée reçut un don inestimable de la part d'Hadès, un casque lui conférant l'invisibilité. Tout en l'arborant, Persée s'aventure là où réside la redoutable Gorgone après avoir arraché l'information aux trois Parques. Grâce à la protection offerte par le casque, il parvient à s'approcher de Méduse sans être vu et finit par la vaincre.",
+
+            "La guilde a decouvert que les propriétés d'invisibilité étaient attribuables à la pierre d'obsidienne, incrustée sur le casque par son gardien, le dieu des Enfers. En effet cette gemme est réputée pour sa protection contre les forces obscures. Malheureusement nous n'avons pas plus d'informations...",
+
+            "Mais, que se passe-t-il ? La pierre de Jaspe, elle emet une lueur, et j'entends une voix ! <em>Pétrifiée par Méduse, figée dans la pierre, Je surplombe la roue des douze, une gardiene austère. Toi qui convoite le pouvoir de te dissimuler, avec mon héritage vient me retrouver.</em> Mais qui était-ce?",
+
+            "\"Célia, je t'ai appelée à mon secours car tu es la seule en mesure de me libérer. Après avoir triomphé de Méduse, Persée m'a pétrifiée en utilisant sa tête tranchée avant de s'enfuir. Il cherche à s'emparer des artefacts divins des dieux, dont la pierre d'obsidienne. Seule cette pierre peut briser ce sortilège et me libérer. J'ai imploré Apollon d'utiliser son char pour rendre visite aux trois <em>Parques</em>. Cependant, après avoir partagé une cruche de vin avec Dionysos à la taverne du <em>Lion Noir</em>, il est possible qu'il ait, en raison de l'ivresse, mal interprété ma demande. Il est parti rapidement en affirmant qu'il n'aurait qu'à <em>retourner à la taverne puis à remonter l'allée.</em>\"",
+
+            "Alors que je visitais les parcs à la recherche de la trace de Persée, il m'est apparu soudainement, comme sorti de nulle part. En un éclair, il m'a pétrifié en utilisant la tête tranchée de Méduse. Et ce qui est encore plus troublant, il a osé me voler mon char, l'un des plus précieux artefacts divins. Il s'est ensuite envolé et disparu parmis les étoiles ! Si seulement quelqu'un avait le <em>pouvoir de le ramener à la raison</em>...",
+
+            "Il te faudra trouver un bon <em>observatoire</em>, et t'équiper de bonnes <em>lunettes</em>, pour retrouver Persée et lui prendre la pierre."
+        ];
+
+        const sliderImagesContainer = document.querySelector('.slider-images');
+
+        // Ajoute les images et les textes au slider
+        images.forEach((image, index) => {
+            const slide = document.createElement('div');
+            slide.classList.add('slider-image');
+            slide.style.backgroundImage = `url('${image}')`;
+
+            const text = document.createElement('div');
+            text.classList.add('slider-text');
+            text.innerHTML = texts[index];
+
+            slide.appendChild(text);
+            sliderImagesContainer.appendChild(slide);
+        });
+
+        // JavaScript pour faire défiler les images
+        let currentIndex = 0;
+        const slides = document.querySelectorAll('.slider-image');
+    </script>
+    <script>
+        function addInputs1(numInputs) {
+            const inputContainer = document.getElementById('inp1');
+            for (let i = 0; i < numInputs; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.maxLength = 1;
+                input.id = `input1_${i + 1}`; // Assurez-vous que l'ID est unique pour chaque input
+                input.className = 'input';
+                input.oninput = function () {
+                    if (input.value != '') {
+                        input.value = input.value.toUpperCase();
+                        focusNext(this);
+                    }
+                };
+                input.onkeydown = function (event) {
+                    // Si la touche pressée est "effacer" (code 8) et que l'input est vide
+                    if (event.keyCode === 8 && input.value === '') {
+                        // Empêche le comportement par défaut de la touche "effacer" (ne pas naviguer vers l'arrière)
+                        event.preventDefault();
+                        // Focus sur l'élément précédent
+                        focusPrevious(this);
+                    }
+                };
+                inputContainer.appendChild(input);
+            }
+        }
+
+        function addInputs2(numInputs) {
+            const inputContainer = document.getElementById('inp2');
+            for (let i = 0; i < numInputs; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.maxLength = 1;
+                input.id = `input2_${i + 1}`; // Assurez-vous que l'ID est unique pour chaque input
+                input.className = 'input';
+                input.oninput = function () {
+                    if (input.value != "") {
+                        input.value = input.value.toUpperCase();
+                        focusNext(this);
+                    }
+                };
+                input.onkeydown = function (event) {
+                    // Si la touche pressée est "effacer" (code 8) et que l'input est vide
+                    if (event.keyCode === 8 && input.value === '') {
+                        // Empêche le comportement par défaut de la touche "effacer" (ne pas naviguer vers l'arrière)
+                        event.preventDefault();
+                        // Focus sur l'élément précédent
+                        focusPrevious(this);
+                    }
+                };
+                inputContainer.appendChild(input);
+            }
+        }
+
+        function deleteInputs() {
+            const inputContainer1 = document.getElementById('inp1');
+            while (inputContainer1.firstChild) {
+                inputContainer1.removeChild(inputContainer1.firstChild);
+            }
+            const inputContainer2 = document.getElementById('inp2');
+            while (inputContainer2.firstChild) {
+                inputContainer2.removeChild(inputContainer2.firstChild);
+            }
+        }
+
+        function focusNext(input) {
+            const nextInput = input.nextElementSibling; // Obtenez l'élément suivant
+
+            // Si un élément suivant existe
+            if (nextInput) {
+                nextInput.focus(); // Déplacez le focus vers l'élément suivant
+            } else {
+                const inputContainer = input.parentElement; // Obtenez le conteneur de l'input
+
+                // Si un conteneur suivant existe
+                if (inputContainer.id === 'inp1') {
+                    if (document.getElementById('inp2').querySelector('input')) {
+                        document.getElementById('inp2').querySelector('input').focus();
+                    }
+                }
+            }
+
+            checkAnswer(currentIndex);
+        }
+
+        function focusPrevious(input) {
+            const previousInput = input.previousElementSibling;
+            if (previousInput) {
+                previousInput.focus();
+            }
+            else {
+                const inputContainer = document.getElementById('inp1');
+                const inputs = inputContainer.querySelectorAll('input');
+                const lastInput = inputs[inputs.length - 1]; // Récupérer le dernier input
+                if (lastInput) {
+                    lastInput.focus(); // Focaliser le dernier input
+                }
+            }
+        }
+
+        function checkAnswer(page_number) {
+            var inputs1 = document.querySelectorAll('#inp1 .input'); // Sélectionner les inputs dans #inp1
+
+            var inputValues1 = [];
+            inputs1.forEach(function (input) {
+                inputValues1.push(input.value);
+            });
+
+            var combinedString1 = inputValues1.join('');
+
+            if (combinedString1 == "ARIANE") {
+                document.getElementById("next").hidden = false;
+            }
+        }
+
+        function showNextSlide(index) {
+            if (index >= slides.length) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const offset = -(currentIndex + 1) * 100;
+            document.querySelector('.slider-images').style.transform = `translateX(${offset}%)`;
+        }
+
+        function showPreviousSlide(index) {
+            if (index < 0) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const offset = -(currentIndex - 1) * 100;
+            document.querySelector('.slider-images').style.transform = `translateX(${offset}%)`;
+        }
+
+        function prevSlide() {
+            showPreviousSlide(currentIndex - 1);
+            currentIndex--; // Increment currentIndex after showing the next slide
+            updateComponents();
+        }
+
+        function nextSlide() {
+            showNextSlide(currentIndex + 1);
+            currentIndex++; // Increment currentIndex after showing the next slide
+            updateComponents();
+        }
+
+        function updateComponents() {
+            switch (currentIndex) {
+                case 2:
+                    document.getElementById("next").hidden = true;
+                    var q22Finished = localStorage.getItem('q2-2Finished');
+                    if (!q22Finished) {
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(callBack1);
+                        } else {
+                            console.log("Geolocation is not supported by this browser.");
+                        }
+                    }
+                    else {
+                        document.getElementById("next").hidden = false;
+                    }
+                    break;
+                case 3:
+                    deleteInputs();
+                    localStorage.setItem("q2-2Finished", "True");
+                    document.getElementById("next").hidden = true;
+                    var q23Finished = localStorage.getItem('q2-3Finished');
+                    if (!q23Finished) {
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(callBack2);
+                        } else {
+                            console.log("Geolocation is not supported by this browser.");
+                        }
+                    }
+                    else {
+                        document.getElementById("next").hidden = false;
+                    }
+                    break;
+                case 4:
+                    localStorage.setItem("q2-3Finished", "True");
+                    document.getElementById("next").hidden = true;
+                    addInputs1(6);
+                    break;
+                case 5:
+                    deleteInputs();
+                    localStorage.setItem("q2Finished", "True");
+                default:
+                    deleteInputs();
+                    document.getElementById("next").hidden = false;
+            }
+        }
+
+
+        updateComponents();
+
+        document.addEventListener('mousedown', function (event) {
+            // Check if the clicked element is an input with the 'input' class
+            if (event.target.classList.contains('input-container')) {
+                const container = event.target;
+                setTimeout(function () {
+                    container.querySelector("input").focus();
+                }, 100);
+            }
+        });
+
+        function callBack1(position) {
+            // Coordonnées de l'autre position
+            const otherLatitude = 43.72003; // Remplacez par la latitude de l'autre position
+            const otherLongitude = 1.30036; // Remplacez par la longitude de l'autre position
+
+            distance = getDistance(position, otherLatitude, otherLongitude);
+            if (distance.toFixed(2) < 50) {
+                document.getElementById("next").hidden = false;
+            }
+        }
+
+        function callBack2(position) {
+            // Coordonnées de l'autre position
+            const otherLatitude = 43.572903; // Remplacez par la latitude de l'autre position
+            const otherLongitude = 1.478029; // Remplacez par la longitude de l'autre position
+            distance = getDistance(position, otherLatitude, otherLongitude);
+            if (distance.toFixed(2) < 50) {
+                document.getElementById("next").hidden = false;
+            }
+        }
+
+        function getDistance(position, otherLatitude, otherLongitude) {
+            // Fonction pour calculer la distance entre deux points en utilisant la formule de Haversine
+            function haversine(lat1, lon1, lat2, lon2) {
+                const R = 6371; // Rayon de la Terre en kilomètres
+                const dLat = (lat2 - lat1) * Math.PI / 180;
+                const dLon = (lon2 - lon1) * Math.PI / 180;
+                const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                const d = R * c;
+                return d;
+            }
+
+            // Position actuelle de l'utilisateur
+            const userLatitude = position.coords.latitude;
+            const userLongitude = position.coords.longitude;
+
+            // Calcul de la distance entre les deux positions
+            const distance = haversine(userLatitude, userLongitude, otherLatitude, otherLongitude);
+
+            console.log("Distance: " + distance.toFixed(2) + " km");
+            return distance;
+        }
+
+    </script>
+</body>
+
+</html>
