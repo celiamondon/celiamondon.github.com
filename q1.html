@@ -212,7 +212,6 @@
             font-size: 10px;
             cursor: not-allowed;
             pointer-events: none;
-            -webkit-user-select: text
         }
     </style>
 </head>
@@ -472,12 +471,27 @@
                     deleteInputs();
                     addInputs1(5);
                     addInputs2(10);
-                    document.getElementById("next").hidden = true;
+                    if (localStorage.getItem('q1-2Finished')) {
+                        document.getElementById("next").hidden = false;
+                    }
+                    else {
+                        document.getElementById("next").hidden = true;
+                    }
                     break;
                 case 3:
+                    localStorage.setItem("q1-2Finished", "True");
                     deleteInputs();
                     addInputs1(10);
-                    document.getElementById("next").hidden = true;
+                    if (localStorage.getItem('q1-3Finished')) {
+                        document.getElementById("next").hidden = false;
+                    }
+                    else {
+                        document.getElementById("next").hidden = true;
+                    }
+                    break;
+                case 4:
+                    deleteInputs();
+                    localStorage.setItem("q1-3Finished", "True");
                     break;
                 case 5:
                     localStorage.setItem("q1Finished", "True");

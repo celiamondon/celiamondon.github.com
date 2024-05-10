@@ -507,11 +507,11 @@
 
         function callBack1(position) {
             // Coordonnées de l'autre position
-            const otherLatitude = 43.72003; // Remplacez par la latitude de l'autre position
-            const otherLongitude = 1.30036; // Remplacez par la longitude de l'autre position
+            const otherLatitude = 43.72005; // Remplacez par la latitude de l'autre position
+            const otherLongitude = 1.30034; // Remplacez par la longitude de l'autre position
 
             distance = getDistance(position, otherLatitude, otherLongitude);
-            if (distance.toFixed(2) < 50) {
+            if (distance.toFixed(2) < 1) {
                 document.getElementById("next").hidden = false;
             }
         }
@@ -521,7 +521,7 @@
             const otherLatitude = 43.572903; // Remplacez par la latitude de l'autre position
             const otherLongitude = 1.478029; // Remplacez par la longitude de l'autre position
             distance = getDistance(position, otherLatitude, otherLongitude);
-            if (distance.toFixed(2) < 50) {
+            if (distance.toFixed(2) < 1) {
                 document.getElementById("next").hidden = false;
             }
         }
